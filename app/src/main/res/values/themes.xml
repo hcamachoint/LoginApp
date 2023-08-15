@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.LoginApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/color_morado</item>
+        <item name="colorPrimaryVariant">@color/color_morado_accent</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/color_gray_light</item>
+        <item name="colorSecondaryVariant">@color/color_gray</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+    
+    <style name="MenuButton" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:layout_height">70dp</item>
+        <item name="android:layout_marginRight">25dp</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:paddingLeft">100dp</item>
+        <item name="android:paddingRight">100dp</item>
+    </style>
+</resources>
