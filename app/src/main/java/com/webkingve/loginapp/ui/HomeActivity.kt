@@ -7,15 +7,14 @@ import android.widget.Button
 import com.webkingve.loginapp.R
 import com.webkingve.loginapp.util.PreferenceHelper
 import com.webkingve.loginapp.util.PreferenceHelper.set
-import com.webkingve.loginapp.util.PreferenceHelper.get
 
-class MenuActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     private val preference by lazy { PreferenceHelper.defaultPrefs(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_menu)
+        setContentView(R.layout.activity_home)
 
         val btnLogout = findViewById<Button>(R.id.btn_logout)
         btnLogout.setOnClickListener {

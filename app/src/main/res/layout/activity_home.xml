@@ -4,21 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.MenuActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Inicio"
-            android:fontFamily="@font/retro"
-            android:textSize="60sp"
-            android:layout_marginTop="60dp"
-            android:layout_marginLeft="25dp"/>
-    </LinearLayout>
+    tools:context=".ui.HomeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

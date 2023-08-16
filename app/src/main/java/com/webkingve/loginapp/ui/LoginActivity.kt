@@ -1,9 +1,9 @@
 package com.webkingve.loginapp.ui
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.telecom.Call
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
@@ -20,17 +20,19 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
+    private var mProgressDialog: Dialog? = null
+
     private val apiService: ApiService by lazy{
         ApiService.create()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_login)
 
         val preferences = PreferenceHelper.defaultPrefs(this)
         if (preferences["token", ""].contains(".")){
-            goToMenu()
+            goToHome()
         }
 
         val tvGoRegister = findViewById<TextView>(R.id.tv_go_to_register)
@@ -49,8 +51,8 @@ class MainActivity : AppCompatActivity() {
        startActivity(i)
    }
 
-    private fun goToMenu(){
-        val i = Intent(this, MenuActivity::class.java)
+    private fun goToHome(){
+        val i = Intent(this, HomeActivity::class.java)
         startActivity(i)
         finish()
     }
@@ -65,34 +67,50 @@ class MainActivity : AppCompatActivity() {
         val etPassword = findViewById<EditText>(R.id.et_password).text.toString()
 
         if(etUsuario.trim().isEmpty() || etPassword.trim().isEmpty()){
-            Toast.makeText(applicationContext, "Ingresa un nombre de usuario y contrasena", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "Insert your username and password", Toast.LENGTH_SHORT).show()
             return
         }
+
+        showCustomProgressDialog()
 
         val call = apiService.postLogin(etUsuario, etPassword)
         call.enqueue(object: Callback<LoginResponse> {
             override fun onResponse(call: retrofit2.Call<LoginResponse>, response: Response<LoginResponse>) {
+                hideCustomProgressDialog()
                 if (response.isSuccessful){
                     val loginResponse = response.body()
                     if (loginResponse == null){
-                        Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "An error occurred on the server", Toast.LENGTH_SHORT).show()
                         return
                     }else if(loginResponse.access != ""){
                         createSessionPreference(loginResponse.access)
-                        goToMenu()
+                        goToHome()
                     }else{
-                        Toast.makeText(applicationContext, "Las credenciales son incorrectas", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "The credentials are wrong", Toast.LENGTH_SHORT).show()
                     }
                 }else{
-                    Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "An error occurred on the server", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: retrofit2.Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(applicationContext, "Se produjo un error en el servidor", Toast.LENGTH_SHORT).show()
+                hideCustomProgressDialog()
+                Toast.makeText(applicationContext, "An error occurred on the server", Toast.LENGTH_SHORT).show()
                 Log.i("Network failed", t.toString())
             }
 
         })
+    }
+
+    private fun showCustomProgressDialog(){
+        mProgressDialog = Dialog(this)
+        mProgressDialog!!.setContentView(R.layout.dialog_custom_progress)
+        mProgressDialog!!.show()
+    }
+
+    private fun hideCustomProgressDialog(){
+        if(mProgressDialog != null){
+            mProgressDialog!!.dismiss()
+        }
     }
 }
