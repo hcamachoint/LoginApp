@@ -15,6 +15,7 @@ import com.webkingve.loginapp.io.response.LoginResponse
 import com.webkingve.loginapp.util.PreferenceHelper
 import com.webkingve.loginapp.util.PreferenceHelper.get
 import com.webkingve.loginapp.util.PreferenceHelper.set
+import org.w3c.dom.Text
 import retrofit2.Callback
 import retrofit2.Response
 
@@ -46,10 +47,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-   private fun goToRegister(){
-       val i = Intent(this, RegisterActivity::class.java)
-       startActivity(i)
-   }
+    private fun goToRegister(){
+        val i = Intent(this, RegisterActivity::class.java)
+        startActivity(i)
+    }
 
     private fun goToHome(){
         val i = Intent(this, HomeActivity::class.java)
@@ -65,6 +66,7 @@ class MainActivity : AppCompatActivity() {
     private fun performLogin(){
         val etUsuario = findViewById<EditText>(R.id.et_usuario).text.toString()
         val etPassword = findViewById<EditText>(R.id.et_password).text.toString()
+        val tvLoginMessage = findViewById<TextView>(R.id.tv_login_message)
 
         if(etUsuario.trim().isEmpty() || etPassword.trim().isEmpty()){
             Toast.makeText(applicationContext, "Insert your username and password", Toast.LENGTH_SHORT).show()
@@ -77,26 +79,27 @@ class MainActivity : AppCompatActivity() {
         call.enqueue(object: Callback<LoginResponse> {
             override fun onResponse(call: retrofit2.Call<LoginResponse>, response: Response<LoginResponse>) {
                 hideCustomProgressDialog()
-                if (response.isSuccessful){
-                    val loginResponse = response.body()
-                    if (loginResponse == null){
-                        Toast.makeText(applicationContext, "An error occurred on the server", Toast.LENGTH_SHORT).show()
-                        return
-                    }else if(loginResponse.access != ""){
-                        createSessionPreference(loginResponse.access)
-                        goToHome()
-                    }else{
-                        Toast.makeText(applicationContext, "The credentials are wrong", Toast.LENGTH_SHORT).show()
-                    }
+                val loginResponse = response.body()
+
+                if (response.code() == 200){
+                    createSessionPreference(loginResponse!!.access)
+                    goToHome()
+                }else if(response.code() == 400){
+                    tvLoginMessage.text = "No active account found with the given credentials"
+                    //Toast.makeText(applicationContext, "No active account found with the given credentials", Toast.LENGTH_SHORT).show()
+                }else if(response.code() == 401){
+                    tvLoginMessage.text = "Please insert username and password"
+                    //Toast.makeText(applicationContext, "Please insert username and password", Toast.LENGTH_SHORT).show()
                 }else{
-                    Toast.makeText(applicationContext, "An error occurred on the server", Toast.LENGTH_SHORT).show()
+                    tvLoginMessage.text = "An error occurred on the server"
+                    //Toast.makeText(applicationContext, "An error occurred on the server", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: retrofit2.Call<LoginResponse>, t: Throwable) {
                 hideCustomProgressDialog()
-                Toast.makeText(applicationContext, "An error occurred on the server", Toast.LENGTH_SHORT).show()
-                Log.i("Network failed", t.toString())
+                tvLoginMessage.text = "An error occurred on the server"
+                //Toast.makeText(applicationContext, "An error occurred on the server", Toast.LENGTH_SHORT).show()
             }
 
         })

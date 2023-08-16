@@ -14,4 +14,5 @@
     <color name="color_morado_light">#E0D9ED</color>
     <color name="color_gray">#B5B5B5</color>
     <color name="color_gray_light">#F5F5F5</color>
+    <color name="color_error">#A80000</color>
 </resources>
