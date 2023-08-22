@@ -37,6 +37,15 @@
             android:textSize="15sp"
             android:background="@drawable/edittext_custom"
             android:padding="15dp"/>
+        <TextView
+            android:id="@+id/tv_first_name_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="30dp"
+            android:text=""
+            android:textColor="@color/color_error"
+            android:visibility="gone" />
         <EditText
             android:id="@+id/et_register_last_name"
             android:layout_width="match_parent"
@@ -49,6 +58,15 @@
             android:textSize="15sp"
             android:background="@drawable/edittext_custom"
             android:padding="15dp"/>
+        <TextView
+            android:id="@+id/tv_last_name_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="30dp"
+            android:text=""
+            android:textColor="@color/color_error"
+            android:visibility="gone" />
         <EditText
             android:id="@+id/et_register_username"
             android:layout_width="match_parent"
@@ -61,6 +79,15 @@
             android:textSize="15sp"
             android:background="@drawable/edittext_custom"
             android:padding="15dp"/>
+        <TextView
+            android:id="@+id/tv_username_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="30dp"
+            android:text=""
+            android:textColor="@color/color_error"
+            android:visibility="gone" />
         <EditText
             android:id="@+id/et_register_email"
             android:layout_width="match_parent"
@@ -73,6 +100,15 @@
             android:textSize="15sp"
             android:background="@drawable/edittext_custom"
             android:padding="15dp"/>
+        <TextView
+            android:id="@+id/tv_email_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="30dp"
+            android:text=""
+            android:textColor="@color/color_error"
+            android:visibility="gone" />
         <EditText
             android:id="@+id/et_register_password"
             android:layout_width="match_parent"
@@ -85,6 +121,15 @@
             android:textSize="15sp"
             android:background="@drawable/edittext_custom"
             android:padding="15dp"/>
+        <TextView
+            android:id="@+id/tv_password_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="30dp"
+            android:text=""
+            android:textColor="@color/color_error"
+            android:visibility="gone" />
         <EditText
             android:id="@+id/et_register_password2"
             android:layout_width="match_parent"
@@ -97,6 +142,15 @@
             android:textSize="15sp"
             android:background="@drawable/edittext_custom"
             android:padding="15dp"/>
+        <TextView
+            android:id="@+id/tv_password2_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="30dp"
+            android:text=""
+            android:textColor="@color/color_error"
+            android:visibility="gone" />
     </LinearLayout>
 
     <LinearLayout
@@ -104,6 +158,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:paddingTop="20dp"
         android:gravity="center_horizontal">
         <Button
             android:id="@+id/bt_register_send"

@@ -15,6 +15,7 @@ import com.webkingve.loginapp.io.response.LoginResponse
 import com.webkingve.loginapp.util.PreferenceHelper
 import com.webkingve.loginapp.util.PreferenceHelper.get
 import com.webkingve.loginapp.util.PreferenceHelper.set
+import org.json.JSONObject
 import org.w3c.dom.Text
 import retrofit2.Callback
 import retrofit2.Response
@@ -84,22 +85,16 @@ class MainActivity : AppCompatActivity() {
                 if (response.code() == 200){
                     createSessionPreference(loginResponse!!.access)
                     goToHome()
-                }else if(response.code() == 400){
-                    tvLoginMessage.text = "No active account found with the given credentials"
-                    //Toast.makeText(applicationContext, "No active account found with the given credentials", Toast.LENGTH_SHORT).show()
-                }else if(response.code() == 401){
-                    tvLoginMessage.text = "Please insert username and password"
-                    //Toast.makeText(applicationContext, "Please insert username and password", Toast.LENGTH_SHORT).show()
                 }else{
-                    tvLoginMessage.text = "An error occurred on the server"
-                    //Toast.makeText(applicationContext, "An error occurred on the server", Toast.LENGTH_SHORT).show()
+                    val jsonObj = JSONObject(response.errorBody()!!.charStream().readText())
+                    val msgError = jsonObj.getString("detail") //jsonObj.getBoolean('wherever'), jsonObj.getInt('wherever'), jsonObj.getJSONObject('wherever')
+                    tvLoginMessage.text = msgError
                 }
             }
 
             override fun onFailure(call: retrofit2.Call<LoginResponse>, t: Throwable) {
                 hideCustomProgressDialog()
                 tvLoginMessage.text = "An error occurred on the server"
-                //Toast.makeText(applicationContext, "An error occurred on the server", Toast.LENGTH_SHORT).show()
             }
 
         })
@@ -117,3 +112,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
